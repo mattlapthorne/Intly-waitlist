@@ -32,7 +32,7 @@ export const IntlyWaitlist = () => {
       >
         <div className="relative inline-flex h-16 flex-col items-center justify-center">
           <img
-            className="relative h-16 w-[120px]"
+            className="relative h-16 w-auto"
             alt="Intly"
             src={intlyLogoImage}
           />
