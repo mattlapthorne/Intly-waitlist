@@ -7,12 +7,21 @@ export const IntlyWaitlist = () => {
   const [email, setEmail] = useState("");
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (event.currentTarget.checkValidity()) {
-      setHasSubmitted(true);
+    const form = event.currentTarget;
+    if (!form.checkValidity()) {
+      return;
     }
+
+    await fetch(form.action, {
+      method: form.method,
+      body: new FormData(form),
+      mode: "no-cors",
+    });
+
+    setHasSubmitted(true);
   };
 
   return (
@@ -44,33 +53,49 @@ export const IntlyWaitlist = () => {
             Find a home for your pieces
           </p>
         </header>
-        <form
-          action="https://submit-form.com/NlPk7tKvP"
-          method="POST"
-          className="relative flex w-full flex-[0_0_auto] flex-col items-start gap-5 self-stretch"
-        >
-          <input type="hidden" name="_redirect" value="https://intly.app/thanks" />
-          <div className="relative flex w-full flex-[0_0_auto] flex-col items-start gap-2 self-stretch">
-            <label className="relative mt-[-1px] self-stretch [font-family:'Geist-SemiBold',Helvetica] text-[10px] font-semibold leading-[normal] tracking-[1.2px] text-[#8e8e93]">
-              YOUR EMAIL
-            </label>
-            <input
-              className="relative h-[50px] w-full flex-1 self-stretch rounded-xl border border-solid border-[#2e2e33] bg-zinc-900 px-4 py-0 [font-family:'Helvetica_Neue-Italic',Helvetica] text-base font-normal italic leading-[normal] tracking-[0] text-white placeholder:text-[#5c5c5e] focus:border-[#8e8e93]"
-              name="email"
-              placeholder="you@example.com"
-              required
-              type="email"
-            />
-          </div>
-          <button
-            className="relative flex h-12 w-full items-center justify-center self-stretch rounded-xl bg-white transition-opacity hover:opacity-90"
-            type="submit"
+        {hasSubmitted ? (
+          <p
+            id={statusId}
+            role="status"
+            className="relative self-stretch [font-family:'Inter-Regular',Helvetica] text-center text-[15px] font-normal leading-[22px] tracking-[0] text-white"
           >
-            <span className="relative w-fit [font-family:'Geist-SemiBold',Helvetica] text-sm font-semibold leading-[normal] tracking-[0] text-[#0e0e10]">
-              Request access
-            </span>
-          </button>
-        </form>
+            You're on the list — we'll be in touch.
+          </p>
+        ) : (
+          <form
+            action="https://submit-form.com/NlPk7tKvP"
+            method="POST"
+            onSubmit={handleSubmit}
+            className="relative flex w-full flex-[0_0_auto] flex-col items-start gap-5 self-stretch"
+          >
+            <div className="relative flex w-full flex-[0_0_auto] flex-col items-start gap-2 self-stretch">
+              <label
+                htmlFor={emailInputId}
+                className="relative mt-[-1px] self-stretch [font-family:'Geist-SemiBold',Helvetica] text-[10px] font-semibold leading-[normal] tracking-[1.2px] text-[#8e8e93]"
+              >
+                YOUR EMAIL
+              </label>
+              <input
+                id={emailInputId}
+                className="relative h-[50px] w-full flex-1 self-stretch rounded-xl border border-solid border-[#2e2e33] bg-zinc-900 px-4 py-0 [font-family:'Helvetica_Neue-Italic',Helvetica] text-base font-normal italic leading-[normal] tracking-[0] text-white placeholder:text-[#5c5c5e] focus:border-[#8e8e93]"
+                name="email"
+                placeholder="you@example.com"
+                required
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+            </div>
+            <button
+              className="relative flex h-12 w-full items-center justify-center self-stretch rounded-xl bg-white transition-opacity hover:opacity-90"
+              type="submit"
+            >
+              <span className="relative w-fit [font-family:'Geist-SemiBold',Helvetica] text-sm font-semibold leading-[normal] tracking-[0] text-[#0e0e10]">
+                Request access
+              </span>
+            </button>
+          </form>
+        )}
       </section>
     </main>
   );
