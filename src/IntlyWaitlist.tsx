@@ -29,7 +29,7 @@ export const IntlyWaitlist = () => {
         aria-labelledby="waitlist-heading"
       >
         <div className="flex flex-col items-center relative self-stretch w-full flex-[0_0_auto]">
-          <img className="relative h-20 w-auto" alt="Intly" src={brandLogo} />
+          <img className="relative h-14 w-auto" alt="Intly" src={brandLogo} />
         </div>
         <header className="flex flex-col items-start gap-2 relative self-stretch w-full flex-[0_0_auto]">
           <h1
