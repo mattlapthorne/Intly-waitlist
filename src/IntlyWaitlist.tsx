@@ -1,11 +1,9 @@
-import { type FormEvent, useId, useState } from "react";
-import intlyLogoImage from "./intly-logo-image.png";
+import { type FormEvent, useState } from "react";
+import brandLogo from "./intly-logo-image.png";
 
 export const IntlyWaitlist = () => {
-  const emailInputId = useId();
-  const statusId = useId();
   const [email, setEmail] = useState("");
-  const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -15,83 +13,75 @@ export const IntlyWaitlist = () => {
       return;
     }
 
-    await fetch(form.action, {
-      method: form.method,
+    await fetch("https://submit-form.com/NlPk7tKvP", {
+      method: "POST",
       body: new FormData(form),
       mode: "no-cors",
     });
 
-    setHasSubmitted(true);
+    setIsSubmitted(true);
   };
 
   return (
-    <main className="flex min-h-[844px] flex-col items-center justify-center bg-[#080809] p-4">
+    <main className="flex flex-col min-h-[844px] items-center justify-center p-4 relative bg-[#1800ad]">
       <section
+        className="items-start gap-[13px] px-6 py-11 bg-[#1800ad] flex flex-col relative self-stretch w-full flex-[0_0_auto]"
         aria-labelledby="waitlist-heading"
-        className="relative flex w-full flex-[0_0_auto] flex-col items-center gap-8 self-stretch rounded-[32px] border-[none] bg-[linear-gradient(0deg,rgba(255,255,255,0.02)_0%,rgba(255,255,255,0.02)_100%),linear-gradient(0deg,rgba(27,27,31,1)_0%,rgba(13,13,15,1)_100%)] px-5 py-12 shadow-[0px_16px_32px_#00000080] backdrop-blur-md backdrop-brightness-[100%] before:pointer-events-none before:absolute before:inset-0 before:z-[1] before:rounded-[32px] before:p-px before:content-[''] before:[background:linear-gradient(0deg,rgba(255,255,255,0.18)_0%,rgba(255,255,255,0.04)_50%,rgba(255,255,255,0.08)_100%)] before:[-webkit-mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:[-webkit-mask-composite:xor] before:[mask-composite:exclude]"
       >
-        <div className="relative inline-flex h-16 flex-col items-center justify-center">
-          <img
-            className="relative h-16 w-auto"
-            alt="Intly"
-            src={intlyLogoImage}
-          />
+        <div className="flex flex-col items-center relative self-stretch w-full flex-[0_0_auto]">
+          <img className="relative w-20 h-20" alt="Intly" src={brandLogo} />
         </div>
-        <div className="relative inline-flex flex-[0_0_auto] items-center gap-1.5 rounded-[100px] border border-solid border-[#2e2e33] px-3.5 py-2">
-          <span className="relative mt-[-1px] w-fit [font-family:'Geist-SemiBold',Helvetica] text-[11px] font-semibold leading-[normal] tracking-[1.5px] text-white">
-            EARLY ACCESS
-          </span>
-        </div>
-        <header className="relative flex w-full flex-[0_0_auto] flex-col items-center gap-3 self-stretch">
+        <header className="flex flex-col items-start gap-2 relative self-stretch w-full flex-[0_0_auto]">
           <h1
             id="waitlist-heading"
-            className="relative mt-[-1px] self-stretch [font-family:'TASA_Orbiter-SemiBold',Helvetica] text-center text-[26px] font-semibold leading-[34px] tracking-[-0.5px] text-white"
+            className="relative w-[310px] mt-[-1.00px] [font-family:'EB_Garamond-SemiBold',Helvetica] font-semibold text-white text-[28px] tracking-[-0.50px] leading-9"
           >
-            Absurd amount of screenshots and zero plan?
+            Create spaces, don&apos;t just save them.
           </h1>
-          <p className="relative self-stretch [font-family:'Inter-Regular',Helvetica] text-center text-[15px] font-normal leading-[22px] tracking-[0] text-[#8e8e93]">
-            Find a home for your pieces
+          <p className="relative w-[310px] [font-family:'EB_Garamond-Regular',Helvetica] font-normal text-white text-[17px] tracking-[0] leading-6">
+            A toolkit for collectors, curators and design lovers.
           </p>
         </header>
-        {hasSubmitted ? (
+        {isSubmitted ? (
           <p
-            id={statusId}
+            id="request-status"
             role="status"
-            className="relative self-stretch [font-family:'Inter-Regular',Helvetica] text-center text-[15px] font-normal leading-[22px] tracking-[0] text-white"
+            className="relative self-stretch [font-family:'EB_Garamond-Regular',Helvetica] font-normal text-white text-[14px] tracking-[0] leading-[normal]"
           >
             You're on the list — we'll be in touch.
           </p>
         ) : (
           <form
-            action="https://submit-form.com/NlPk7tKvP"
-            method="POST"
+            className="items-center gap-2.5 pt-3 pb-0 px-0 flex flex-col relative self-stretch w-full flex-[0_0_auto]"
             onSubmit={handleSubmit}
-            className="relative flex w-full flex-[0_0_auto] flex-col items-start gap-5 self-stretch"
+            noValidate
           >
-            <div className="relative flex w-full flex-[0_0_auto] flex-col items-start gap-2 self-stretch">
+            <div className="flex flex-col items-start gap-1.5 w-full flex-[0_0_auto] relative self-stretch">
               <label
-                htmlFor={emailInputId}
-                className="relative mt-[-1px] self-stretch [font-family:'Geist-SemiBold',Helvetica] text-[10px] font-semibold leading-[normal] tracking-[1.2px] text-[#8e8e93]"
+                htmlFor="email"
+                className="mt-[-1.00px] [font-family:'EB_Garamond-Regular',Helvetica] font-normal text-white text-[10px] tracking-[0] leading-[normal] relative self-stretch"
               >
-                YOUR EMAIL
+                Your email
               </label>
               <input
-                id={emailInputId}
-                className="relative h-[50px] w-full flex-1 self-stretch rounded-xl border border-solid border-[#2e2e33] bg-zinc-900 px-4 py-0 [font-family:'Helvetica_Neue-Italic',Helvetica] text-base font-normal italic leading-[normal] tracking-[0] text-white placeholder:text-[#5c5c5e] focus:border-[#8e8e93]"
+                id="email"
                 name="email"
-                placeholder="you@example.com"
-                required
                 type="email"
                 value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                onChange={(event) => {
+                  setEmail(event.target.value);
+                }}
+                required
+                autoComplete="email"
+                className="w-full h-9 px-2 bg-[#1800ad] border border-solid border-[#4030cc] relative self-stretch text-white [font-family:'EB_Garamond-Regular',Helvetica] font-normal text-[14px] tracking-[0] leading-[normal]"
               />
             </div>
             <button
-              className="relative flex h-12 w-full items-center justify-center self-stretch rounded-xl bg-white transition-opacity hover:opacity-90"
               type="submit"
+              className="flex w-[155px] h-[27px] items-center justify-center relative bg-[#050097] cursor-pointer"
             >
-              <span className="relative w-fit [font-family:'Geist-SemiBold',Helvetica] text-sm font-semibold leading-[normal] tracking-[0] text-[#0e0e10]">
-                Request access
+              <span className="relative w-fit [font-family:'EB_Garamond-Regular',Helvetica] font-normal text-[#1067ff] text-[9px] tracking-[0] leading-[normal]">
+                Request Access
               </span>
             </button>
           </form>
