@@ -23,9 +23,9 @@ export const IntlyWaitlist = () => {
   };
 
   return (
-    <main className="flex flex-col min-h-[844px] items-center justify-center p-4 relative bg-[#1800ad]">
+    <main className="flex flex-col min-h-[844px] items-center justify-center pb-24 p-4 relative bg-[#1800ad]">
       <section
-        className="items-start gap-[13px] px-6 py-11 bg-[#1800ad] flex flex-col relative self-stretch w-full flex-[0_0_auto]"
+        className="items-start gap-[13px] px-6 pt-0 pb-11 bg-[#1800ad] flex flex-col relative self-stretch w-full flex-[0_0_auto]"
         aria-labelledby="waitlist-heading"
       >
         <div className="flex flex-col items-center relative self-stretch w-full flex-[0_0_auto]">
