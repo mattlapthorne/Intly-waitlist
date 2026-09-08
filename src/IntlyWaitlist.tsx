@@ -4,22 +4,34 @@ import brandLogo from "./intly-logo-image.png";
 export const IntlyWaitlist = () => {
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    // Without this guard, a double-click (or a second tap while the request
+    // is still in flight on a slow connection) fires two separate POSTs —
+    // the cause of the duplicate signups showing up in submissions.
+    if (isSubmitting) {
+      return;
+    }
 
     const form = event.currentTarget;
     if (!form.checkValidity()) {
       return;
     }
 
-    await fetch("https://submit-form.com/NlPk7tKvP", {
-      method: "POST",
-      body: new FormData(form),
-      mode: "no-cors",
-    });
-
-    setIsSubmitted(true);
+    setIsSubmitting(true);
+    try {
+      await fetch("https://submit-form.com/NlPk7tKvP", {
+        method: "POST",
+        body: new FormData(form),
+        mode: "no-cors",
+      });
+      setIsSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -78,10 +90,11 @@ export const IntlyWaitlist = () => {
             </div>
             <button
               type="submit"
-              className="flex w-[155px] h-[27px] items-center justify-center relative bg-[#050097] cursor-pointer"
+              disabled={isSubmitting}
+              className="flex w-[155px] h-[27px] items-center justify-center relative bg-[#050097] cursor-pointer disabled:opacity-60 disabled:cursor-default"
             >
               <span className="relative w-fit [font-family:'EB_Garamond-Regular',Helvetica] font-normal text-[#1067ff] text-[9px] tracking-[0] leading-[normal]">
-                Request Access
+                {isSubmitting ? "Sending…" : "Request Access"}
               </span>
             </button>
           </form>
