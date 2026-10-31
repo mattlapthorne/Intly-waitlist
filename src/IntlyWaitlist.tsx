@@ -82,7 +82,7 @@ export const IntlyWaitlist = () => {
             tabIndex={-1}
             className="relative self-stretch [font-family:'EB_Garamond-Regular',Helvetica] font-normal text-white text-[14px] tracking-[0] leading-[normal] focus:outline-none"
           >
-            You're on the list — we'll be in touch.
+            You're on the list. We'll be in touch.
           </p>
         ) : (
           <form
